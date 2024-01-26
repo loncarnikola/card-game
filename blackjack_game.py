@@ -193,16 +193,19 @@ def game_of_blackjack():
     new_deck.shuffle_deck()
     new_player = Player("John", "500")
     dealer = Dealer()
+    sum_won = 0
 
     while game_on:
         #  Create a new instance of a player with bankroll from originaly created + won or lost money
         new_player = Player(new_player.name, new_player.bankroll)
+        dealer = Dealer()
 
         player_bet = new_player.place_a_bet()
 
         # Player goes first
 
         while Player.player_turn:
+
             # Pulls out a card
             new_player.hit_or_stay(new_deck.pull_card())
             # First check if user goes over 21, the game is over
@@ -220,21 +223,30 @@ def game_of_blackjack():
 
                 print(f"\nSum of the cards that Dealer has is: {dealer_sum}")
 
-                sum_won = player_bet * 2
+
+
 
                 # Check if someone had won
-                if player_sum <= 21 and player_sum > dealer_sum or dealer_sum > 21:
-                    print(f"\n{new_player.name} wins {sum_won}$ !\n")
+                if player_sum == 0 and dealer_sum > 21:
+                    print(f"\033[1m \n{new_player.name} wins {sum_won}$, since he back out\n \033[0;0m")
+                elif player_sum <= 21 and player_sum > dealer_sum or dealer_sum > 21:
+                    # Bold this text
+                    sum_won = player_bet * 2
                     new_player.bankroll += sum_won
+                    print(f"\033[1m \n{new_player.name} wins {sum_won}$12\n \033[0;0m")
                 elif player_sum <= 21 >= dealer_sum and dealer_sum > player_sum:
                     print("Dealer won!")
                     new_player.bankroll -= player_bet
                 elif player_sum <= 21 and player_sum == dealer_sum:
-                    print(f"\n{new_player.name} wins {sum_won}$ !\n")
+                    # Bold this text
+                    sum_won = player_bet * 2
                     new_player.bankroll += sum_won
+                    print(f"\033[1m \n{new_player.name} wins {sum_won}$\n \033[0;0m")
 
 
-                print(f"{new_player.name} now has: {new_player.bankroll}$.\n")
+
+
+                print(f"{new_player.name} now has: {new_player.bankroll}$\n")
 
 
         another_game = input("Do you want to play another one? Y/N\n").lower()
@@ -243,6 +255,7 @@ def game_of_blackjack():
             game_on = True
         else:
             print("Twas nice playing with you!")
+            break
 
 
 game_of_blackjack()
