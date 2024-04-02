@@ -1,2 +1,7 @@
 # card-game
-Milestone Project No.2 - Python from Zero to Hero
+
+## A blackjack game
+
+## Insert the probability matrix for dealer so it can decide wether to HIT or STAY
+
+## Make it more visualy appealing
